@@ -1,0 +1,150 @@
+Admin:
+  - Klasa potomona klasy User, urzytkowni zarządzający serwisem.
+  Atrybuty:
+  - assignedTickets : List<UUID>
+  Metody:
+  + banUser(user : User) : void
+  + manageTags() : void
+  + manageCategories() : void
+  + resolveTicket(ticket : Ticket) : void
+
+AccountStatus:
+  - Enum zawierający statusy jakie może przyjmować konto.
+  INACTIVE
+  ACTIVE
+  DEACTIVATED
+  DELETED
+
+Category:
+  - Kategoria, którą można opisać stream.
+  Atrybuty:
+  - uuid : UUID
+  - name : String
+
+ChatMessge:
+  - Wiadomość na chacie.
+  Atrybuty:
+  - messageId : int
+  - senderUUID : UUID
+  - content : String
+  - sendDate : DateTime
+
+Donation:
+  - Klasa reprezentująca donacje wysłaną do streamera.
+  Atrybuty:
+  - uuid : UUID
+  - amount : Decimal
+  - senderUUID : UUID
+  - receiverUUID : UUID
+  - createdAt : DateTime
+
+PlaylistComponent:
+  - Klasa abstrakcyjna wymaga do osiagnięcia wzorca projektowego composite, który realizowany jest przez playliste.
+  Metody:
+  + display() : void
+
+PlaylistComposite:
+  - Klasa reprezentująca playliste oraz umożliwiająca zarządzanie nią.
+  Atrybuty:
+  - uuid : UUID
+  - name : String
+  - ownerUUID : UUID
+  - accessType : AccessType
+  - children : List<PlaylistComponent>
+  Metody:
+  + add(component : PlaylistComponent) : void
+  + remove(component : PlaylistComponent) : void
+  + display() : void
+
+PlayslitLeaf:
+  - Klasa reprezentująca pojedyńczy stream w playliscie
+  Atrybuty:
+  - vodUUID : UUID
+  Metody:
+  + display() : void
+
+Stream:
+  -Reprezentacja stremu.
+  Atrybuty:
+  - streamId : int
+  - title : String
+  - categories : List<Category>
+  - viewers : List<User>
+  - startTime : DateTime
+  - endTime : DateTime
+  - isLive : bool
+  Metody:
+  + start() : void
+  + stop() : void
+
+StreamerCard:
+  - Karta streamera dająca mu dostęp do benefitów.
+  Atrybuty:
+  - uuid : UUID
+  - ownerUUID : UUID
+  - deliveryAddress : String
+  - verified : boo
+
+Streamer:
+  - Klasa potomna User, urzytkownik, który stremuje.
+  Atryuty:
+  - followers : List<UUID>
+  - subscribers : List<UUID>
+  Metody:
+  + startStream() : void
+  + stopStream() : void
+  + muteUser(user : User, duration : int) : void
+  + banUser(user : User) : void
+  + requestCard() : void
+  + withdraw() : void
+
+Subscription:
+  - Klasa przechowujaca inforamcje o subkrybcja urzytkowników do streamerów.
+  Atrybuty:
+  - uuid : UUID
+  - amount : Decimal
+  - userUUID : UUID
+  - streamerUUID : UUID
+  - billingDate : DateTime
+
+Ticket:
+  - Klasa przechowująca informacje o zgłoszonym problemie.
+  Atrybuty:
+  - uuid : UUID
+  - reporterUUID : UUID
+  - assignedAdminUUID : UUID
+  - description : String  
+  - status : TicketStatus
+  - createdAt : DateTime
+  - resolvedAt : DateTime
+
+TicketStatus:
+  - Enum opisujący stan ticketu.
+  OPEN
+  IN_PROGRESS
+  CLOSED
+
+User:
+ - Klasa reprezentująca zalogowanego się użytkownika serwius.
+ Atrybuty:
+ - uuid : UUID
+ - username : String
+ - email : String
+ - password : String
+ - status : AccountStatus
+ - verified : bool
+Metody:
++ follow(streamer : Streamer) : void
++ donate(amount : Decimal) : void  
++ subscribe(streamer : Streamer) : void
++ deleteAccount() : void
+
+Vod:
+- Zapis streama w formie wideo dostępny do wyświetlenia.
+Atrybuty:
+- vodId : int
+- title : String
+- duration : int
+- uploadDate : DateTime
+Metody:
++ display() : void
